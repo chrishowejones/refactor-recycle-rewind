@@ -1,0 +1,97 @@
+#+OPTIONS: toc:nil num:nil
+#+TITLE: The 3 R's - using clj-refactor
+#+AUTHOR: Chris Howe-Jones
+#+EMAIL: @agile_geek
+#+REVEAL_SLIDE_NUMBER: false
+#+REVEAL_THEME: black
+#+REVEAL_TRANS: convex
+#+REVEAL_HLEVEL: 2
+#+REVEAL_ROOT: .
+#+REVEAL_CENTER: true
+#+REVEAL_PLUGINS: (highlight markdown notes)
+
+* The 3 R's - Refactor, Re-cycle and Re-wind using clj-refactor
+
+** clj-refactor
+
+   Elisp functions in Emacs
+
+*** A quick tour of my favourite refactoring functions in clj-refactor.
+
+   They don't fix my code but they make it look prettier.
+
+** Installation
+
+*** Instructions here...
+
+    [[https://github.com/clojure-emacs/clj-refactor.el#installation]]
+
+    Install using elpa (from marmalade or melpa)
+
+    #+BEGIN_SRC emacs-lisp
+    M-x package-install clj-refactor
+    #+END_SRC
+
+*** Require in init.el
+
+    Add require and keybindings to .emacs.d/init.el
+
+    #+BEGIN_SRC emacs-lisp
+    (require 'clj-refactor)
+    (add-hook 'clojure-mode-hook
+                           (lambda ()
+                             (clj-refactor-mode 1)
+                             ;; insert keybinding setup here- e.g.
+                             (cljr-add-keybindings-with-prefix "C-c RET")))
+    #+END_SRC
+
+*** Optional setup for refactor-nrepl
+
+    nrepl middleware for advanced refactorings
+
+    Add following to ~project.clj~ or to ~:user~ profile in ~~.lein/profiles.clj~
+
+    #+BEGIN_SRC clojure
+      :plugins [[refactor-nrepl "1.0.5"]]
+    #+END_SRC
+
+
+** Use clj-refactor
+
+   My favourites!
+
+    #+BEGIN_SRC clojure
+      il: introduce let
+      el: expand let
+      ml: move to let
+      tf: wrap in thread-first (->) and fully thread
+      tl: wrap in thread-last (->>) and fully thread
+      ua: fully unwind a threaded expression
+      uw: unwind a threaded expression
+    #+END_SRC
+
+*** Using refactor-nrepl
+
+    Even more sugar!
+
+    #+BEGIN_SRC clojure
+      am: add a missing libspec
+      ef: extract function
+      rs: rename symbol
+      an: clean up project dependencies
+    #+END_SRC
+
+
+#+BEGIN_NOTES
+   * Start by introducing let for :customer map and find call - il on start {
+   * expand let (positioned on let)
+   * extract function to find-customer
+   * type in let for find-customer then use move to let C-RET ml
+   * rename site-defaults symbol to api-defaults
+   * add wrap-json-response which has no libspec so add dependency with C-RET am
+   * add wrap-json-params and also add dependency again
+   * place cursor on opening parans before wrap-json-params and use C-RET tf
+   * then unwind once using C-RET uw
+   * then unwind all using C-RET ua
+   * then use thread last C-RET tl
+#+END_NOTES

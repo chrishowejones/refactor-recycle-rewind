@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>The 3 R's - using clj-refactor</title>
+<meta name="author" content="(Chris Howe-Jones)"/>
+
+<link rel="stylesheet" href="./css/reveal.css"/>
+<link rel="stylesheet" href="./css/theme/black.css" id="theme"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = './css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1>The 3 R's - using clj-refactor</h1>
+<h2>Chris Howe-Jones</h2>
+<h2><a href="mailto:@agile_geek">@agile_geek</a></h2>
+<h2></h2>
+</section>
+
+<section>
+<section id="slide-sec-1">
+<h2 id="sec-1">The 3 R's - Refactor, Re-cycle and Re-wind using clj-refactor</h2>
+<div class="outline-text-2" id="text-1">
+</div></section>
+</section>
+<section>
+<section id="slide-sec-1-1">
+<h3 id="sec-1-1">clj-refactor</h3>
+<p>
+Elisp functions in Emacs
+</p>
+
+</section>
+<section id="slide-sec-1-1-1">
+<h4 id="sec-1-1-1">A quick tour of my favourite refactoring functions in clj-refactor.</h4>
+<p>
+They don't fix my code but they make it look prettier.
+</p>
+
+</section>
+</section>
+<section>
+<section id="slide-sec-1-2">
+<h3 id="sec-1-2">Installation</h3>
+<div class="outline-text-3" id="text-1-2">
+</div></section>
+<section id="slide-sec-1-2-1">
+<h4 id="sec-1-2-1">Instructions here&#x2026;</h4>
+<p>
+<a href="https://github.com/clojure-emacs/clj-refactor.el#installation">https://github.com/clojure-emacs/clj-refactor.el#installation</a>
+</p>
+
+<p>
+Install using elpa (from marmalade or melpa)
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-emacs-lisp">M-x package-install clj-refactor
+</pre>
+</div>
+
+</section>
+<section id="slide-sec-1-2-2">
+<h4 id="sec-1-2-2">Require in init.el</h4>
+<p>
+Add require and keybindings to .emacs.d/init.el
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-emacs-lisp"><span style="color: #8b0000;">(</span><span style="color: #FBDE2D;">require</span> '<span style="color: #4c83ff;">clj-refactor</span><span style="color: #8b0000;">)</span>
+<span style="color: #8b0000;">(</span>add-hook 'clojure-mode-hook
+                       <span style="color: #006400;">(</span><span style="color: #FBDE2D;">lambda</span> <span style="color: #ff1493;">()</span>
+                         <span style="color: #ff1493;">(</span>clj-refactor-mode 1<span style="color: #ff1493;">)</span>
+                         <span style="color: #8B8989; font-style: italic;">;; </span><span style="color: #8B8989; font-style: italic;">insert keybinding setup here- e.g.</span>
+                         <span style="color: #ff1493;">(</span>cljr-add-keybindings-with-prefix <span style="color: #61CE3C;">"C-c RET"</span><span style="color: #ff1493;">)</span><span style="color: #006400;">)</span><span style="color: #8b0000;">)</span>
+</pre>
+</div>
+
+</section>
+<section id="slide-sec-1-2-3">
+<h4 id="sec-1-2-3">Optional setup for refactor-nrepl</h4>
+<p>
+nrepl middleware for advanced refactorings
+</p>
+
+<p>
+Add following to <code>project.clj</code> or to <code>:user</code> profile in <code>~.lein/profiles.clj</code>
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure"><span style="color: #4c83ff;">:plugins</span> <span style="color: #8b0000;">[</span><span style="color: #006400;">[</span>refactor-nrepl <span style="color: #61CE3C;">"1.0.5"</span><span style="color: #006400;">]</span><span style="color: #8b0000;">]</span>
+</pre>
+</div>
+
+
+</section>
+</section>
+<section>
+<section id="slide-sec-1-3">
+<h3 id="sec-1-3">Use clj-refactor</h3>
+<p>
+My favourites!
+</p>
+
+<div class="org-src-container">
+
+<pre  class="src src-clojure">il: introduce let
+</pre>
+</div>
+</section>
+</section>
+</div>
+</div>
+
+<script src="./lib/js/head.min.js"></script>
+<script src="./js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: true,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'convex', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: './plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+ { src: './plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: './plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+]
+});
+</script>
+</body>
+</html>
